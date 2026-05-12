@@ -41,5 +41,11 @@ namespace MvcCoreAWSS3.Controllers
             TempData["MENSAJE"] = $"Http Status Code: {codigo}";
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> PrivateFile(string fileName)
+        {
+            Stream stream = await this.service.GetPrivateFileAsync(fileName);
+            return File(stream, "image/png");
+        }
     }
 }

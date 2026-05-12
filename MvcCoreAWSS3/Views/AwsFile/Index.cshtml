@@ -1,5 +1,9 @@
 ﻿@model List<string>
 
+@{
+    string bucketUrl = configuration.GetValue<string>("AWS:BucketUrl");
+}
+
 <h1>
     AWS S3 Files
 </h1>
@@ -16,13 +20,17 @@
     @foreach (string fileName in Model)
     {
         <div class="card" style="width: 18rem;">
-            <img src="https://bucket-core-arp.s3.us-east-1.amazonaws.com/@fileName" class="card-img-top" alt="...">
+            <img src="@bucketUrl@fileName" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">@fileName</h5>
                 <a asp-controller="AwsFile"
                    asp-action="DeleteFile"
                    asp-route-filename="@fileName"
                    class="btn btn-delete">Delete</a>
+                <a asp-controller="AwsFile"
+                   asp-action="PrivateFile"
+                   asp-route-filename="@fileName"
+                   class="btn btn-private">Download</a>
             </div>
         </div>
     }

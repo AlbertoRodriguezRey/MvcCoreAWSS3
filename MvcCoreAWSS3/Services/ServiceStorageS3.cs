@@ -46,6 +46,12 @@ namespace MvcCoreAWSS3.Services
             List<string> ficheros = response.Versions.Select(v => v.Key).ToList();
             return ficheros;
         }
+
+        public async Task<Stream> GetPrivateFileAsync(string fileName)
+        {
+            GetObjectResponse response = await this.clientS3.GetObjectAsync(this.BucketName, fileName);
+            return response.ResponseStream;
+        }
     }
 }
 
